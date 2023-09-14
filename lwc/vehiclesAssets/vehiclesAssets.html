@@ -1,0 +1,49 @@
+<template>
+
+    <div class="slds-grid slds-gutters">
+        <lightning-card>
+        <div class="slds-col">
+
+            
+
+                <div style="height: 200px;">
+                    <lightning-datatable
+                            key-field="id"
+                            data={data}
+                            columns={columns}                            
+                            hide-label="true"
+                            
+                            onrowselection={handleRowSelection}
+                            >
+                    </lightning-datatable>
+                </div>
+            
+        </div>
+    </lightning-card>
+    </div>
+
+    <div class="slds-grid slds-gutters">
+        
+        <div class="slds-col">
+            <lightning-card > 
+            
+                <div class="slds-text-align_center">
+
+                    <lightning-button style="margin-bottom: 50px; "
+                    variant="brand" 
+                    label="Link Selection" 
+                    title="Primary action" 
+                    onclick={handleData} 
+                    class="slds-m-left_x-small"
+                    ></lightning-button>
+                </div>
+               
+             </lightning-card>
+        </div>
+  
+    </div>
+
+   
+</template>
+
+<!-- selected-rows={selectedRows} -->
