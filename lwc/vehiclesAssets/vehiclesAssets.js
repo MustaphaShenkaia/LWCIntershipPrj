@@ -13,6 +13,7 @@ export default class VehiclesAssets extends LightningElement {
     @track data; 
 
     @track selectedRows = []; 
+
     
     columns = [
         {
@@ -36,7 +37,7 @@ export default class VehiclesAssets extends LightningElement {
         },
         {
             label: 'Product Name',
-            fieldName: 'Product2Id',
+            fieldName:  'Product2_Name', // Product2Id // Product2.Name
             type: 'text',
             //sortable: true
         }
@@ -47,11 +48,29 @@ export default class VehiclesAssets extends LightningElement {
   
      @wire(getAssets, {Opportunity__c: null} ) getAssets({error, data}) {
 
-        if(data) {
-            this.data = data; 
+        // if(data) {
+        //     this.data = data; 
+        // } else if(error) {
+        //     this.data = undefined; 
+        // }
+
+        //----------------------------------
+
+        if (data) {
+
+            let accParsedData = JSON.parse(JSON.stringify(data));
+
+            accParsedData.forEach(acc=> {
+                if(acc.Product2Id){
+                acc.Product2_Name =acc.Product2.Name;
+                }
+            });
+
+            this.data = accParsedData;
+
         } else if(error) {
-            this.data = undefined; 
-        }
+                this.data = undefined; 
+            }
      }       
 
      //---------------------------
@@ -62,9 +81,11 @@ export default class VehiclesAssets extends LightningElement {
         
     }  
 
+    //---------------------------
+    
     handleData() {       
 
-        if (this.selectedRows.length > 0) {
+        if (this.selectedRows.length > 0) {            
 
             const records = [];
                       
@@ -77,9 +98,10 @@ export default class VehiclesAssets extends LightningElement {
                 records.push(record);
             }
 
-           // console.log(records);
+
 
            updateAsset({records:records})
+
            .then( () => {
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -88,7 +110,10 @@ export default class VehiclesAssets extends LightningElement {
                         variant: 'success',
                     })
                 );
+                
             } )
+
+            
             .catch( () => {
                 this.dispatchEvent(
                     new ShowToastEvent({
@@ -99,10 +124,11 @@ export default class VehiclesAssets extends LightningElement {
                 );
             } )
             // method().then( () => {} ).catch( () => {} )   
-
+            
         }
 
-        this.dispatchEvent(new CloseActionScreenEvent()); 
+        this.dispatchEvent(new CloseActionScreenEvent());     
+        
     }
 
 }
