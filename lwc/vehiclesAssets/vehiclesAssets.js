@@ -37,7 +37,7 @@ export default class VehiclesAssets extends LightningElement {
         },
         {
             label: 'Product Name',
-            fieldName:  'Product2_Name', // Product2Id // Product2.Name
+            fieldName:  'Product2_Name', // Product2Id // Product2
             type: 'text',
             //sortable: true
         }
